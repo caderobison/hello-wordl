@@ -30,8 +30,12 @@ interface GameProps {
   colorBlind: boolean;
   keyboardLayout: string;
 }
+const normalDifficulty = targetList.indexOf("murky" + 1);
+const easyDifficulty = targetList.indexOf("bear" + 1);
 
-const targets = targetList.slice(0, targetList.indexOf("murky") + 1); // Words no rarer than this one
+const normalTargets = targetList.slice(0, normalDifficulty); // Words no rarer than this one
+const easyTargets = targetList.slice(0, easyDifficulty);
+let targets = normalTargets;
 const minLength = 4;
 const defaultLength = 5;
 const maxLength = 11;
@@ -90,6 +94,11 @@ function Game(props: GameProps) {
   const [wordLength, setWordLength] = useState(
     challenge ? challenge.length : parseUrlLength()
   );
+  if(props.difficulty > 0){
+    targets = normalTargets;
+  } else {
+    targets = easyTargets;
+  }
   const [gameNumber, setGameNumber] = useState(parseUrlGameNumber());
   const [target, setTarget] = useState(() => {
     resetRng();
