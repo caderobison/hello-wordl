@@ -40,7 +40,7 @@ function App() {
     window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [dark, setDark] = useSetting<boolean>("dark", prefersDark);
   const [colorBlind, setColorBlind] = useSetting<boolean>("colorblind", false);
-  const [difficulty, setDifficulty] = useSetting<number>("difficulty", 0);
+  const [difficulty, setDifficulty] = useSetting<number>("difficulty", 1);
   const [keyboard, setKeyboard] = useSetting<string>(
     "keyboard",
     "qwertyuiop-asdfghjkl-BzxcvbnmE"
@@ -74,8 +74,8 @@ function App() {
       <h1>
         <span
           style={{
-            color: difficulty > 0 ? "#e66" : "inherit",
-            fontStyle: difficulty > 1 ? "italic" : "inherit",
+            color: difficulty > 1 ? "#e66" : "inherit",
+            fontStyle: difficulty > 2 ? "italic" : "inherit",
           }}
         >
           hell
@@ -130,13 +130,13 @@ function App() {
               id="difficulty-setting"
               type="range"
               min="0"
-              max="2"
+              max="3"
               value={difficulty}
               onChange={(e) => setDifficulty(+e.target.value)}
             />
             <div>
               <label htmlFor="difficulty-setting">Difficulty:</label>
-              <strong>{["Normal", "Hard", "Ultra Hard"][difficulty]}</strong>
+              <strong>{["Easy","Normal", "Hard", "Ultra Hard"][difficulty]}</strong>
               <div
                 style={{
                   fontSize: 14,
@@ -147,6 +147,7 @@ function App() {
               >
                 {
                   [
+                    `Guesses must be from a selected pool of more common valid dictionary words.`,
                     `Guesses must be valid dictionary words.`,
                     `Wordle's "Hard Mode". Green letters must stay fixed, and yellow letters must be reused.`,
                     `An even stricter Hard Mode. Yellow letters must move away from where they were clued, and gray clues must be obeyed.`,
